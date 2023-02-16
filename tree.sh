@@ -2,6 +2,8 @@
 
 function tree() {
 	#start tree location if $1 = path /home/.../.../example 
+	local tabb="${2:-|_}"
+	local tabbb="_"
     if [ $# -eq 0 ]; then
         location="."
     else
@@ -10,10 +12,12 @@ function tree() {
 
     for file in "$location"/*; do
         if [ -d "$file" ]; then
-            echo -e "\033[34m $(basename "$file")\033[0m" # color text blue 
-            tree "$file" 
+            echo -e "$tabb\033[34m $(basename "$file")\033[0m" # color text blue 
+
+			tree "$file" "$tabb$tabbb"
+		#	tree "$file" $((tabb=${tabb}${tabbb})) 
         else
-            echo -e "\033[32m $(basename "$file")\033[0m" # color text green 
+            echo -e "$tabb\033[32m $(basename "$file")\033[0m" # color text green 
         fi
     done
 
