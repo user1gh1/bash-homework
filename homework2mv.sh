@@ -28,7 +28,15 @@ paste_file
 hard_link_copy
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    main "$@"
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then    
+	#--help
+    if [[ $1 == "--help" ]]; then
+		echo "for example"
+		echo -e "first input \n /home/youruser/Desktop/yourfile.txt"
+		echo -e "second input \n /home/youruser/Documents/"
+	else
+        main "$@" 
+    fi
+
 fi
 
