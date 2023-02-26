@@ -12,28 +12,28 @@ read copy
 
 #create a hard link and after delete original file 
 function hard_link_copy {
-    #check file exist 
-    if [ ! -e "$file" ]; then
+	#check file exist 
+	if [ ! -e "$file" ]; then
     echo "Error: source file $file does not exist"
     exit 1
-    fi
-    #check if we copy paste in same path give error and exit
-    if [ "$(basename "$(dirname "$file")")" = "$(basename "$copy")" ]; then
-        echo "Error: source path and destination path are in the same directory" 
-        exit 2
-    fi
-    #if dir (cp dir recursive, all permissions are saves)
-    if [ -d "$file" ]; then
-        cp -al $file $copy
-            if [ $? -eq 0 ]; then
-            delete_dir
-            fi
-    else #if file (hardlink)
-        ln $file $copy
-            if [ $? -eq 0 ]; then
-            delete_file
-            fi
-    fi
+	fi
+	#check if we copy paste in same path give error and exit
+	if [ "$(basename "$(dirname "$file")")" = "$(basename "$copy")" ]; then
+	    echo "Error: source path and destination path are in the same directory" 
+	    exit 2
+	fi
+	#if dir (cp dir recursive, all permissions are saves)
+	if [ -d "$file" ]; then
+		cp -al $file $copy
+			if [ $? -eq 0 ]; then
+			delete_dir
+			fi
+	else #if file (hardlink)
+		ln $file $copy
+			if [ $? -eq 0 ]; then
+			delete_file
+			fi
+	fi
 }
 
 function delete_file {
@@ -41,7 +41,7 @@ rm $file
 }
 
 function delete_dir {
-rm -r $file
+rm -r $file 
 }
 
 function main {
@@ -52,4 +52,14 @@ exit 0
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    #--help
+    if [[ $1 == "--help" ]]; then
+        echo "for example"
+        echo -e "first input \n /home/youruser/Desktop/yourfile.txt"
+        echo -e "second input \n /home/youruser/Documents/"
+    else
+        main "$@" 
+    fi
 
+fi                                                                                               
+~                         
